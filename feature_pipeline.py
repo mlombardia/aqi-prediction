@@ -30,7 +30,7 @@ row = {**aqi, **iaqi, "timestamp": get_timestamp(response)}
 
 df = pd.DataFrame([row])
 
-project = hopsworks.login(api_key_value=os.environ['HOPSWORKS_API_KEY'])
+project = hopsworks.login(api_key_value=os.environ['HOPSWORKS_API_TOKEN'])
 feature_store = project.get_feature_store()
 feature_group = feature_store.get_or_create_feature_group(
     name="air_quality",
