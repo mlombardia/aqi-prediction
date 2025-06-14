@@ -1,0 +1,30 @@
+name: Run Feature Pipeline Hourly 2
+
+on:
+  schedule:
+    - cron: '30 * * * *'  # each hour at minute 0
+  workflow_dispatch:     # manual trigger
+
+jobs:
+  run-feature-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run feature pipeline
+        env:
+          AQICN_TOKEN: ${{ secrets.AQICN_TOKEN }}
+          HOPSWORKS_API_TOKEN: ${{ secrets.HOPSWORKS_API_TOKEN }}
+        run: |
+          python feature_pipeline.py
