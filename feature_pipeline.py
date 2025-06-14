@@ -14,7 +14,7 @@ def get_air_quality_data(response):
 def get_air_quality_data_features(response):
     data = {}
     for key in response['data']['iaqi'].keys():
-        data[key] = response['data']['iaqi'][key]['v']
+        data[key] = float(response['data']['iaqi'][key]['v'])
     return data
 
 def get_timestamp(response):
