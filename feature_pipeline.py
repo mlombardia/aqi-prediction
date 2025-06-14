@@ -5,7 +5,7 @@ import os
 
 def get_air_quality_data(response):
     if response.get("status") == "ok":
-        aqi = response['data']['aqi']
+        aqi = float(response['data']['aqi'])
         city = response['data']['city']['name']
         return {"aqi": aqi, "city": city}
     else:
