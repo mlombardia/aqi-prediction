@@ -18,7 +18,7 @@ def get_air_quality_data_features(response):
     return data
 
 def get_timestamp(response):
-    return response['data']['time']['iso']
+    return pd.to_datetime(response['data']['time']['iso'])
 
 url = f"https://api.waqi.info/feed/barcelona/?token={os.environ['AQICN_TOKEN']}"
 
@@ -33,10 +33,24 @@ df = pd.DataFrame([row])
 project = hopsworks.login(api_key_value=os.environ['HOPSWORKS_API_TOKEN'])
 feature_store = project.get_feature_store()
 feature_group = feature_store.get_or_create_feature_group(
-    name="air_quality",
+    name="aqi_data",
     version=1,
     primary_key=["timestamp"],
     description="Air quality data from WAQI API"
 )
 
 feature_group.insert(df, write_options={"wait_for_job": False})
+
+"""
+df["timestamp"] = pd.to_datetime(df["timestamp"])
+
+feature_store = project.get_feature_store()
+feature_group = feature_store.get_or_create_feature_group(
+    name="aqi_data",
+    version=1,
+    primary_key=["timestamp"],
+    description="Air quality data from WAQI API"
+)
+
+feature_group.insert(df, write_options={"wait_for_job": False})
+"""
