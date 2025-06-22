@@ -1,4 +1,4 @@
-name: Run Feature Pipeline Hourly
+name: Run Train Model Pipeline Weekly
 
 on:
   schedule:
