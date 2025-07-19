@@ -5,7 +5,7 @@ import os
 
 st.set_page_config(page_title="Predicción AQI", layout="centered")
 
-st.title("🌫️ Predicción de Calidad del Aire (AQI)")
+st.title("🌫️ Predicción de Calidad del Aire (AQI) en Barcelona")
 st.subheader("Predicción para las próximas 3 horas")
 with st.status("🔄 Obteniendo predicción...", expanded=False) as status:
 
@@ -41,6 +41,25 @@ with st.status("🔄 Obteniendo predicción...", expanded=False) as status:
 
 # --- Mostrar resultado ---
 st.metric("Predicción de AQI (+3h)", f"{prediction:.2f}")
+
+# Interpretar resultado
+def interpretar_aqi(aqi):
+    if aqi <= 50:
+        return "🟢 Buena – Es seguro para todos."
+    elif aqi <= 100:
+        return "🟡 Moderada – Apto, aunque puede afectar a personas muy sensibles."
+    elif aqi <= 150:
+        return "🟠 Moderada - No saludable para grupos sensibles."
+    elif aqi <= 200:
+        return "🔴 No saludable – Limitar actividad al aire libre."
+    elif aqi <= 300:
+        return "🟣 Extremadamente poco saludable – Evitar salir al exterior."
+    else:
+        return "🟤 Peligroso – Alerta sanitaria."
+
+# Mostrar interpretación
+descripcion = interpretar_aqi(prediction)
+st.info(descripcion)
 
 # --- Info extra opcional ---
 with st.expander("🔎 Ver últimas mediciones"):
