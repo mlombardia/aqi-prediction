@@ -1,6 +1,8 @@
 name: Run Feature Pipeline Hourly
 
 on:
+  schedule:
+    - cron: '30 * * * *'
   workflow_dispatch:     # manual trigger
 
 jobs:
