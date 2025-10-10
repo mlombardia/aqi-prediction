@@ -1,6 +1,8 @@
 name: Run Train Model Pipeline Weekly
 
 on:
+  schedule:
+    - cron: '0 9 * * 0'  # each Sunday at 09:00
   workflow_dispatch:     # manual trigger
 
 jobs:
